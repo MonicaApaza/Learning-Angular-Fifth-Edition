@@ -1,0 +1,8 @@
+<ul>
+  @for (product of products | slice:1:3 ; track product.id) {
+    <li class="pill">
+      ⭐ {{product.title}}
+    </li>
+  }
+
+</ul>

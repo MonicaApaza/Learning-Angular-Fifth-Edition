@@ -1,0 +1,11 @@
+@switch (product?.title) {
+  @case ('Keyboard') {⌨️ }
+  @case ('Microphone')
+    {🎤 }
+    @case ('Monitor') {🖥️ }
+    @case ('Mouse') {🖱️ }
+    @case ('Speaker') {🔊 }
+    @case ('Webcam') {📷 }
+  @default { 🏷️}
+}
+{{product?.title}}

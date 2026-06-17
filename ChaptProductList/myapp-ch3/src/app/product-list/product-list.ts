@@ -1,52 +1,35 @@
-import { AfterViewInit, Component, viewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, viewChild } from '@angular/core';
 import { Product } from '../product';
 import { ProductDetail } from '../product-detail/product-detail';
 import { SortPipe } from "../sort-pipe";
+ import { ProductService } from '../product-service';
+import { Favorites } from '../favorites/favorites';
+import { ProductView } from '../product-view/product-view';
+import { ProductViewService } from '../product-view/product-view-service';
 
 @Component({
   selector: 'app-product-list',
-  imports: [ProductDetail, SortPipe],
+  imports: [ProductDetail, SortPipe, Favorites, ProductView],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
+  // providers: [ ProductService ]
+  providers: [ ProductService, ProductViewService ]
 })
-export class ProductList implements AfterViewInit {
-  ngAfterViewInit(): void {
-    console.log('ProductList ngAfterViewInit', this.productDetail()!.product2());
-  }
+export class ProductList implements OnInit, AfterViewInit {
   productDetail = viewChild(ProductDetail);
-  products: Product[] = [
-    {
-      id: 1,
-      title: 'Keyboard',
-      price: 100,
-      categories: {
-        1: 'Computing',
-        2: 'Peripherals',
-      },
-    },
-    {
-      id: 2,
-      title: 'Microphone',
-      price: 35,
-      categories: { 3: 'Multimedia' },
-    },
-    {
-      id: 3,
-      title: 'Web camera',
-      price: 79,
-      categories: {
-        1: 'Computing',
-        3: 'Multimedia',
-      },
-    },
-    {
-      id: 4,
-      title: 'Tablet',
-      price: 500,
-      categories: { 4: 'Entertainment' },
-    },
-  ];
-  selectedProduct: Product | undefined = this.products[0];
+  products: Product[] = [];
+  selectedProduct: Product | undefined = undefined;
+   private productService4 = inject(ProductService);
+
+
+  ngOnInit(): void {
+    this.products = this.productService4.getProducts();
+    this.selectedProduct = this.products[0];
+  }
+
+  ngAfterViewInit(): void {
+    console.log('ProductList ngAfterViewInit');
+  }
 
   pickProduct(product: Product) {
     this.selectedProduct = product;

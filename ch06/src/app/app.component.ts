@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, Signal, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ProductListComponent } from './product-list/product-list.component';
 import { CopyrightDirective } from './copyright.directive';
@@ -19,21 +19,25 @@ import { Observable } from 'rxjs';
   ]
 })
 export class AppComponent {
-  title = 'World';
-  title$ = new Observable(observer => {
+
+  currentDate = signal(new Date());
+
+  title : Signal<string> = signal('');
+  title$:Observable<void> = new Observable(observer => {
     setInterval(() => {
       observer.next();
     }, 2000);
-  });  
+  });
   settings = inject(APP_SETTINGS);
-  
+
   private setTitle = () => {
-    const timestamp = new Date();
-    this.title = `${this.settings.title} (${timestamp})`;
+    this.currentDate.set(new Date());
+    //this.title = `${this.settings.title} (${this.currentDate()})`;
   }
 
   constructor() {
     this.title$.subscribe(this.setTitle);
+    this.title = computed(()=> { return `${this.settings.title} (${this.currentDate()})`;})
   }
-  
+
 }

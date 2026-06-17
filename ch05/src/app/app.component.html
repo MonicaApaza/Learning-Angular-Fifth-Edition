@@ -1,7 +1,12 @@
+<header>{{title}}</header>
 <main class="main">
   <div class="content">
     <app-product-list></app-product-list>
+    <p>Counter: {{ counter }}</p>
+    <h2>subject message: {{ subjectMessage$ | async }}</h2>
+    <app-hello></app-hello>
   </div>
 </main>
 <footer appCopyright> - v{{ settings.version }}</footer>
 <router-outlet />
+<app-key-logger [numeric]="true"></app-key-logger>

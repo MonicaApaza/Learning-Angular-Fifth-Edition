@@ -1,22 +1,11 @@
-@if (products.length > 0){
-  <h1>Products ({{products.length}})</h1>
+@if (products.length > 0) {
+  <h1>Products ({{ products.length }})</h1>
 }
 
 <ul class="pill-group">
-  @for (product of products | sort:'price'; track product.id) {
-    <li class="pill" (click)=pickProduct(product)>
-      @switch (product.title){
-       @case ('Mechanical Keyboard') {
-        ⌨️
-       }
-       @case ('Wireless Headphones') {
-        🎧
-       }
-       @default {
-        🏷️
-       }
-      }
-       {{product.title}}
+  @for (product of products | sort: 'price'; track product.id) {
+    <li class="pill" (click)="pickProduct(product)">
+     <app-product-view [id]="product.id"></app-product-view>
     </li>
   } @empty {
     <p>No products Found!</p>
@@ -26,4 +15,6 @@
     <app-product-detail [product2]="selectedProduct" (added)="onAdded($event)"></app-product-detail>
   }
 
+  <h1>Favorites</h1>
+  <app-favorites></app-favorites>
 </ul>
