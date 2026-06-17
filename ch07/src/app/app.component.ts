@@ -13,29 +13,23 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    RouterOutlet,
-    ProductListComponent,
-    CopyrightDirective
-  ],
+  imports: [RouterOutlet, ProductListComponent, CopyrightDirective],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  providers: [
-    { provide: APP_SETTINGS, useValue: appSettings }
-  ]
+  providers: [],
 })
 export class AppComponent {
   title: Signal<string> = signal('');
-  title$ = new Observable(observer => {
+  title$: Observable<void> = new Observable((observer) => {
     setInterval(() => {
       observer.next();
     }, 2000);
-  });  
+  });
   settings = inject(APP_SETTINGS);
   currentDate = signal(new Date());
   private setTitle = () => {
     this.currentDate.set(new Date());
-  }
+  };
 
   constructor() {
     this.title$.subscribe(this.setTitle);
@@ -43,5 +37,4 @@ export class AppComponent {
       return `${this.settings.title} (${this.currentDate()})`;
     });
   }
-  
 }
