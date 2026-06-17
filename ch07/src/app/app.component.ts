@@ -19,22 +19,11 @@ import { Observable } from 'rxjs';
   providers: [],
 })
 export class AppComponent {
-  title: Signal<string> = signal('');
-  title$: Observable<void> = new Observable((observer) => {
-    setInterval(() => {
-      observer.next();
-    }, 2000);
-  });
+
   settings = inject(APP_SETTINGS);
-  currentDate = signal(new Date());
-  private setTitle = () => {
-    this.currentDate.set(new Date());
-  };
+
 
   constructor() {
-    this.title$.subscribe(this.setTitle);
-    this.title = computed(() => {
-      return `${this.settings.title} (${this.currentDate()})`;
-    });
+
   }
 }
